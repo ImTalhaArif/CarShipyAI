@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { createProxy } from "next/dist/build/webpack/loaders/next-flight-loader/module-proxy"
 import Link from 'next/link'
+import ModalForm from '@/components/modalForm'
 
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
@@ -63,6 +64,9 @@ export default function MobileMenu() {
       >
         <ul className="bg-gray-800 px-4 py-2">
         <li>
+              <ModalForm />
+              </li>
+        <li>
                 <Link
                   href="/signin"
                   className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
@@ -99,11 +103,7 @@ export default function MobileMenu() {
                   Sign up
                 </Link>
               </li>
-              <li>
-                <Link href="/quote" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
-                  Free Quote
-                </Link>
-              </li>
+              
         </ul>
       </nav>
     </div>

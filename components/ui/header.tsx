@@ -28,6 +28,9 @@ return (
           <nav className="hidden md:flex md:grow">
             {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
+            <li>
+              <ModalForm />
+              </li>
               <li>
                 <Link
                   href="/signin"
@@ -65,9 +68,7 @@ return (
                   Sign up
                 </Link>
               </li>
-              <li>
-              <ModalForm />
-              </li>
+              
             </ul>
           </nav>
 

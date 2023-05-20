@@ -36,7 +36,7 @@ module.exports = require("next/dist/compiled/react/jsx-runtime");
 
 /***/ }),
 
-/***/ 1090:
+/***/ 5232:
 /***/ ((module) => {
 
 "use strict";
@@ -290,7 +290,7 @@ __webpack_require__.r(__webpack_exports__);
         '(default)',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3919)), "C:\\Users\\arif_\\Documents\\Carshipy Official\\app\\(default)\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 6034)), "C:\\Users\\arif_\\Documents\\Carshipy Official\\app\\(default)\\page.tsx"],
           
         }]
       },
@@ -340,30 +340,18 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_re
 
 /***/ }),
 
-/***/ 3362:
+/***/ 588:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7898));
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4663));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7898));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 408, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7728));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4187));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9201));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7369));
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8759));
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4917));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4187));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7369));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9201));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9481))
-
-/***/ }),
-
-/***/ 6090:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 3751, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 8301, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 4765, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 5192, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 9222, 23))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7728))
 
 /***/ }),
 
@@ -945,7 +933,7 @@ const __default__ = proxy.default;
 
 /***/ }),
 
-/***/ 3919:
+/***/ 6034:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1721,19 +1709,6 @@ function Zigzag() {
     });
 }
 
-;// CONCATENATED MODULE: ./components/modalForm.tsx
-
-const modalForm_proxy = (0,module_proxy.createProxy)(String.raw`C:\Users\arif_\Documents\Carshipy Official\components\modalForm.tsx`)
-
-// Accessing the __esModule property and exporting $$typeof are required here.
-// The __esModule getter forces the proxy target to create the default export
-// and the $$typeof value is for rendering logic to determine if the module
-// is a client boundary.
-const { __esModule: modalForm_esModule, $$typeof: modalForm_$$typeof } = modalForm_proxy;
-const modalForm_default_ = modalForm_proxy.default;
-
-
-/* harmony default export */ const modalForm = (modalForm_default_);
 ;// CONCATENATED MODULE: ./public/images/testimonial-01.jpg
 /* harmony default export */ const testimonial_01 = ({"src":"/_next/static/media/testimonial-01.025be838.jpg","height":96,"width":96,"blurDataURL":"data:image/jpeg;base64,/9j/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAIAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAP/xAAcEAACAwEAAwAAAAAAAAAAAAABAwACEQYEQWH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AlXq0npLtL9Sy58bbkEVUR6+bkRED/9k=","blurWidth":8,"blurHeight":8});
 ;// CONCATENATED MODULE: ./public/images/testimonial-02.jpg
@@ -1931,13 +1906,11 @@ const metadata = {
 
 
 
-
 function Home() {
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx(Hero, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Features, {}),
-            /*#__PURE__*/ jsx_runtime_.jsx(modalForm, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Zigzag, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Testimonials, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Newsletter, {})
@@ -2039,7 +2012,7 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [319,393,850,736], () => (__webpack_exec__(9368)));
+var __webpack_exports__ = __webpack_require__.X(0, [319,393,850,623], () => (__webpack_exec__(9368)));
 module.exports = __webpack_exports__;
 
 })();

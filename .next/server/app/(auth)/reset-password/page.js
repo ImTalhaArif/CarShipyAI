@@ -33,7 +33,7 @@ module.exports = require("next/dist/compiled/react/jsx-runtime");
 
 /***/ }),
 
-/***/ 1090:
+/***/ 5232:
 /***/ ((module) => {
 
 module.exports = require("next/dist/server/app-render/get-segment-param.js");
@@ -353,7 +353,7 @@ function ResetPassword() {
 var __webpack_require__ = require("../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [319,393,736,972], () => (__webpack_exec__(8804)));
+var __webpack_exports__ = __webpack_require__.X(0, [319,393,623,258], () => (__webpack_exec__(8804)));
 module.exports = __webpack_exports__;
 
 })();
