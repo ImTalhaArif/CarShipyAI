@@ -1,0 +1,7 @@
+{
+  "/(default)/page": "/",
+  "/api/hello/route": "/api/hello",
+  "/(auth)/signin/page": "/signin",
+  "/(auth)/reset-password/page": "/reset-password",
+  "/(auth)/signup/page": "/signup"
+}
