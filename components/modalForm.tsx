@@ -1,6 +1,4 @@
-"use client"
-import React, { useState } from 'react';
-import styles from '@/components/modalForm.module.css'; // Import CSS file for styling
+import React, { useState, useEffect } from 'react';
 
 const ModalForm: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,154 +6,146 @@ const ModalForm: React.FC = () => {
     name: '',
     email: '',
     message: '',
+    isOperable: false,
+    openAirCarrier: false,
+    shipTo: '',
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [estimatedPrice, setEstimatedPrice] = useState('');
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    const { name, value, type, checked } = e.target as HTMLInputElement;
+    const inputValue = type === 'checkbox' ? checked : value;
+    setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
   };
-  
-  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Perform form submission logic here
-    console.log(formData);
-    // Reset form data and close the modal
-    setFormData({ name: '', email: '', message: '' });
-    setIsOpen(false);
+    setIsCalculating(true);
+
+    setTimeout(() => {
+      const basePrice = 200;
+      const shipToOptions = [
+        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI',
+        'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD'
+      ];
+      const selectedIndex = shipToOptions.indexOf(formData.shipTo);
+      const price = 21 * 100;
+
+      setEstimatedPrice(`$${price}`);
+      setIsSubmitted(true);
+      setIsCalculating(false);
+    }, 3000);
   };
+
+  const handleBookNow = () => {
+    console.log('Book Now clicked');
+
+  };
+
+  useEffect(() => {
+    if (isCalculating) {
+      setIsOpen(true);
+    }
+  }, [isCalculating]);
 
   return (
     <div>
-      <button className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" onClick={() => setIsOpen(true)}>FREE QUOTE</button>
-      
+      <button className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" onClick={() => setIsOpen(true)}>
+        FREE QUOTE
+      </button>
 
       {isOpen && (
-       <div
-       className={styles.modal}
-       style={{
-         backgroundColor: 'black',
-         background: 'linear-gradient(to bottom, #4e54c8, #8f94fb)',
-         animation: 'fadeIn 0.7s ease-in',
-       }}
-     >
-       <div
-         className={styles.modalContent}
-         style={{
-           backgroundColor: 'transparent',
-           color: 'white',
-         }}
-       >
-         <span
-           className={styles.closeButton}
-           onClick={() => setIsOpen(false)}
-           style={{
-             color: 'white',
-             cursor: 'pointer',
-           }}
-         >
-           &times;
-         </span>
-     
-         <h2>Get A Free Quote</h2>
-     
-         <form
-           className={styles.modalForm}
-           onSubmit={handleSubmit}
-           style={{
-             display: 'flex',
-             flexDirection: 'column',
-             gap: '10px',
-             padding: '20px',
-             borderRadius: '8px',
-             width: '500px',
-             backdropFilter: 'blur(10px)',
-             position: 'relative',
-             backgroundColor: 'rgba(0, 0, 0, 0.6)',
-           }}
-         >
-           <div
-             style={{
-               position: 'absolute',
-               top: 0,
-               left: 0,
-               right: 7,
-               bottom: 0,
-               zIndex: -1,
-               backgroundImage: "url('public/images/car-carrier-image.jpg')",
-               opacity: 0.6,
-               backgroundRepeat: 'repeat',
-               animation: 'glowingStarsAnimation 10s linear infinite',
-             }}
-           ></div>
-     
-           <label style={{ display: 'flex', flexDirection: 'column' }}>
-             <span>Car Model:</span>
-             <input
-               type="text"
-               name="carModel"
-               placeholder="Enter Car Model"
-               onChange={handleInputChange}
-               style={{
-                 padding: '5px',
-                 borderRadius: '4px',
-                 border: '2px solid #fff',
-                 boxShadow: '0 0 10px rgba(255, 255, 255, 0.5) inset',
-                 outline: 'none',
-                 background: 'transparent',
-                 color: '#fff',
-                 textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-               }}
-               required
-             />
-           </label>
-     
-           <label style={{ display: 'flex', flexDirection: 'column' }}>
-             <span>Car Year:</span>
-             <input
-               type="number"
-               name="carYear"
-               placeholder="Enter Car Year"
-               onChange={handleInputChange}
-               style={{
-                 padding: '5px',
-                 borderRadius: '4px',
-                 border: '2px solid #fff',
-                 boxShadow: '0 0 10px rgba(255, 255, 255, 0.5) inset',
-                 outline: 'none',
-                 background: 'transparent',
-                 color: '#fff',
-                 textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-               }}
-               required
-             />
-           </label>
-     
-           <label style={{ display: 'flex', flexDirection: 'column' }}>
-             <span>Ship From:</span>
-             <select
-               name="location"
-               onChange={handleInputChange}
-               style={{      
-padding: '5px',      
-borderRadius: '4px',
-border:'2px solid #fff',
-boxShadow:'0 0 10px rgba(255, 255, 255, 0.5) inset',
-outline: 'none',      
-background: 'transparent',
-color: '#fff',      
-textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-appearance: 'none', /* Hide the default arrow */      
-WebkitAppearance: 'none', /* Removearrow in Chrome/Safari */      
-MozAppearance: 'none', /* Remove arrow in Firefox */      
-paddingRight: '20px', /* Add space for custom arrow */    }}
-    
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            zIndex: 9999,
+          }}
+        >
+          {!isSubmitted ? (
+            <div
+              style={{
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                padding: '20px',
+                maxWidth: '90%',
+                maxHeight: '90%',
+                overflow: 'auto',
+              }}
+            >
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                &times;
+              </span>
 
-               required
-             >
-               <option value="">Select a State</option>
-               <option value="AL">Alabama</option>
+              <h2>Get A Free Quote</h2>
+
+              <form onSubmit={handleSubmit} style={{color:'black'}}>
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <span>Car Model:</span>
+                <input
+                  type="text"
+                  name="carModel"
+                  placeholder="Enter Car Model"
+                  onChange={handleInputChange}
+                  style={{
+                    padding: '5px',
+                    borderRadius: '4px',
+                    border: '2px solid #ccc',
+                    outline: 'none',
+                  }}
+                  required
+                />
+              </label>
+
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <span>Car Year:</span>
+                <input
+                  type="number"
+                  name="carYear"
+                  placeholder="Enter Car Year"
+                  onChange={handleInputChange}
+                  style={{
+                    padding: '5px',
+                    borderRadius: '4px',
+                    border: '2px solid #ccc',
+                    outline: 'none',
+                  }}
+                  required
+                />
+              </label>
+
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <span>Ship From:</span>
+                <select
+                  name="location"
+                  onChange={handleInputChange}
+                  style={{
+                    padding: '5px',
+                    borderRadius: '4px',
+                    border: '2px solid #ccc',
+                    outline: 'none',
+                  }}
+                  required
+                >
+                  <option value="">Select a State</option>
+                  <option value="AL">Alabama</option>
                <option value="AK">Alaska</option>
                <option value="AZ">Arizona</option>
                <option value="AR">Arkansas</option>
@@ -175,31 +165,24 @@ paddingRight: '20px', /* Add space for custom arrow */    }}
                <option value="LA">Louisiana</option>
                <option value="ME">Maine</option>
                <option value="MD">Maryland</option>
-             </select>
-           </label>
-     
-           <label style={{ display: 'flex', flexDirection: 'column' }}>
-             <span>Ship To:</span>
-             <select
-               name="location"
-               onChange={handleInputChange}
-               style={{      
-                padding: '5px',      
-                borderRadius: '4px',
-                border:'2px solid #fff',
-                boxShadow:'0 0 10px rgba(255, 255, 255, 0.5) inset',
-                outline: 'none',      
-                background: 'transparent',
-                color: '#fff',      
-                textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-                appearance: 'none', /* Hide the default arrow */      
-                WebkitAppearance: 'none', /* Removearrow in Chrome/Safari */      
-                MozAppearance: 'none', /* Remove arrow in Firefox */      
-                paddingRight: '20px', /* Add space for custom arrow */    }}
-               required
-             >
-               <option value="">Select a State</option>
-               <option value="AL">Alabama</option>
+                </select>
+              </label>
+
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <span>Ship To:</span>
+                <select
+                  name="location"
+                  onChange={handleInputChange}
+                  style={{
+                    padding: '5px',
+                    borderRadius: '4px',
+                    border: '2px solid #ccc',
+                    outline: 'none',
+                  }}
+                  required
+                >
+                  <option value="">Select a State</option>
+                  <option value="AL">Alabama</option>
                <option value="AK">Alaska</option>
                <option value="AZ">Arizona</option>
                <option value="AR">Arkansas</option>
@@ -219,48 +202,103 @@ paddingRight: '20px', /* Add space for custom arrow */    }}
                <option value="LA">Louisiana</option>
                <option value="ME">Maine</option>
                <option value="MD">Maryland</option>
-             </select>
-           </label>
-     
-           <label style={{ display: 'flex', flexDirection: 'column' }}>
-             <span>Delivery Date:</span>
-             <input
-               type="date"
-               name="carYear"
-               placeholder="Delivery Date"
-               onChange={handleInputChange}
-               style={{
-                 padding: '5px',
-                 borderRadius: '4px',
-                 border: '2px solid #fff',
-                 boxShadow: '0 0 10px rgba(255, 255, 255, 0.5) inset',
-                 outline: 'none',
-                 background: 'transparent',
-                 color: '#fff',
-                 textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-               }}
-               required
-             />
-           </label>
-     
-           <button
-             type="submit"
-             style={{
-               padding: '8px 16px',
-               borderRadius: '50px',
-               backgroundColor: '#333',
-               color: '#fff',
-               border: 'none',
-               cursor: 'pointer',
-               marginTop: '20px',
-             }}
-           >
-             Submit
-           </button>
-         </form>
-       </div>
-     </div>
-     
+                </select>
+              </label>
+
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <span>Delivery Date:</span>
+                <input
+                  type="date"
+                  name="carYear"
+                  placeholder="Delivery Date"
+                  onChange={handleInputChange}
+                  style={{
+                    padding: '5px',
+                    borderRadius: '4px',
+                    border: '2px solid #ccc',
+                    outline: 'none',
+                  }}
+                  required
+                />
+              </label>
+
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="isOperable"
+                  checked={formData.isOperable}
+                  onChange={handleInputChange}
+                />
+                <span>Is the car operable?</span>
+              </label>
+
+              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                <input
+                  type="checkbox"
+                  name="openAirCarrier"
+                  checked={formData.openAirCarrier}
+                  onChange={handleInputChange}
+                />
+                <span>Open air carrier preferred?</span>
+              </label>
+
+
+                <button
+                  type="submit"
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '4px',
+                    backgroundColor: '#333',
+                    color: '#fff',
+                    border: 'none',
+                    marginTop: '16px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Calculate
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div
+              style={{
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                padding: '20px',
+                maxWidth: '90%',
+                maxHeight: '90%',
+                overflow: 'auto',
+              }}
+            >
+              <h2 style={{color: 'black'}}>Estimated Price</h2>
+
+              {isCalculating ? (
+                <div className="text-center text-xl">Calculating...</div>
+              ) : (
+                <div>
+                     <span
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setIsOpen(false)}
+              >
+                &times;
+              </span>
+                  <p style={{color: 'black'}}>Your estimated price is: {estimatedPrice}</p>
+                  <button
+                    className="btn-sm text-white bg-purple-600 hover:bg-purple-700"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Book Now
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

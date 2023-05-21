@@ -39,39 +39,74 @@ var react_ = __webpack_require__(8038);
 // EXTERNAL MODULE: ./node_modules/next/link.js
 var next_link = __webpack_require__(1621);
 var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
-// EXTERNAL MODULE: ./components/modalForm.module.css
-var modalForm_module = __webpack_require__(7164);
-var modalForm_module_default = /*#__PURE__*/__webpack_require__.n(modalForm_module);
 ;// CONCATENATED MODULE: ./components/modalForm.tsx
-/* __next_internal_client_entry_do_not_use__ default auto */ 
 
- // Import CSS file for styling
+
 const ModalForm = ()=>{
     const [isOpen, setIsOpen] = (0,react_.useState)(false);
     const [formData, setFormData] = (0,react_.useState)({
         name: "",
         email: "",
-        message: ""
+        message: "",
+        isOperable: false,
+        openAirCarrier: false,
+        shipTo: ""
     });
+    const [isSubmitted, setIsSubmitted] = (0,react_.useState)(false);
+    const [estimatedPrice, setEstimatedPrice] = (0,react_.useState)("");
+    const [isCalculating, setIsCalculating] = (0,react_.useState)(false);
     const handleInputChange = (e)=>{
-        const { name , value  } = e.target;
+        const { name , value , type , checked  } = e.target;
+        const inputValue = type === "checkbox" ? checked : value;
         setFormData((prevData)=>({
                 ...prevData,
-                [name]: value
+                [name]: inputValue
             }));
     };
     const handleSubmit = (e)=>{
         e.preventDefault();
-        // Perform form submission logic here
-        console.log(formData);
-        // Reset form data and close the modal
-        setFormData({
-            name: "",
-            email: "",
-            message: ""
-        });
-        setIsOpen(false);
+        setIsCalculating(true);
+        setTimeout(()=>{
+            const basePrice = 200;
+            const shipToOptions = [
+                "AL",
+                "AK",
+                "AZ",
+                "AR",
+                "CA",
+                "CO",
+                "CT",
+                "DE",
+                "FL",
+                "GA",
+                "HI",
+                "ID",
+                "IL",
+                "IN",
+                "IA",
+                "KS",
+                "KY",
+                "LA",
+                "ME",
+                "MD"
+            ];
+            const selectedIndex = shipToOptions.indexOf(formData.shipTo);
+            const price = 21 * 100;
+            setEstimatedPrice(`$${price}`);
+            setIsSubmitted(true);
+            setIsCalculating(false);
+        }, 3000);
     };
+    const handleBookNow = ()=>{
+        console.log("Book Now clicked");
+    };
+    (0,react_.useEffect)(()=>{
+        if (isCalculating) {
+            setIsOpen(true);
+        }
+    }, [
+        isCalculating
+    ]);
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx("button", {
@@ -80,64 +115,52 @@ const ModalForm = ()=>{
                 children: "FREE QUOTE"
             }),
             isOpen && /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: (modalForm_module_default()).modal,
                 style: {
-                    backgroundColor: "black",
-                    background: "linear-gradient(to bottom, #4e54c8, #8f94fb)",
-                    animation: "fadeIn 0.7s ease-in"
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "rgba(0, 0, 0, 0.8)",
+                    zIndex: 9999
                 },
-                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                    className: (modalForm_module_default()).modalContent,
+                children: !isSubmitted ? /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                     style: {
-                        backgroundColor: "transparent",
-                        color: "white"
+                        backgroundColor: "white",
+                        borderRadius: "8px",
+                        padding: "20px",
+                        maxWidth: "90%",
+                        maxHeight: "90%",
+                        overflow: "auto"
                     },
                     children: [
                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                            className: (modalForm_module_default()).closeButton,
-                            onClick: ()=>setIsOpen(false),
                             style: {
-                                color: "white",
+                                position: "absolute",
+                                top: "10px",
+                                right: "10px",
                                 cursor: "pointer"
                             },
+                            onClick: ()=>setIsOpen(false),
                             children: "\xd7"
                         }),
                         /*#__PURE__*/ jsx_runtime_.jsx("h2", {
                             children: "Get A Free Quote"
                         }),
                         /*#__PURE__*/ (0,jsx_runtime_.jsxs)("form", {
-                            className: (modalForm_module_default()).modalForm,
                             onSubmit: handleSubmit,
                             style: {
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "10px",
-                                padding: "20px",
-                                borderRadius: "8px",
-                                width: "500px",
-                                backdropFilter: "blur(10px)",
-                                position: "relative",
-                                backgroundColor: "rgba(0, 0, 0, 0.6)"
+                                color: "black"
                             },
                             children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                    style: {
-                                        position: "absolute",
-                                        top: 0,
-                                        left: 0,
-                                        right: 7,
-                                        bottom: 0,
-                                        zIndex: -1,
-                                        backgroundImage: "url('public/images/car-carrier-image.jpg')",
-                                        opacity: 0.6,
-                                        backgroundRepeat: "repeat",
-                                        animation: "glowingStarsAnimation 10s linear infinite"
-                                    }
-                                }),
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
                                     style: {
                                         display: "flex",
-                                        flexDirection: "column"
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
                                     },
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
@@ -151,12 +174,8 @@ const ModalForm = ()=>{
                                             style: {
                                                 padding: "5px",
                                                 borderRadius: "4px",
-                                                border: "2px solid #fff",
-                                                boxShadow: "0 0 10px rgba(255, 255, 255, 0.5) inset",
-                                                outline: "none",
-                                                background: "transparent",
-                                                color: "#fff",
-                                                textShadow: "0 0 10px rgba(255, 255, 255, 0.5)"
+                                                border: "2px solid #ccc",
+                                                outline: "none"
                                             },
                                             required: true
                                         })
@@ -165,7 +184,8 @@ const ModalForm = ()=>{
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
                                     style: {
                                         display: "flex",
-                                        flexDirection: "column"
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
                                     },
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
@@ -179,12 +199,8 @@ const ModalForm = ()=>{
                                             style: {
                                                 padding: "5px",
                                                 borderRadius: "4px",
-                                                border: "2px solid #fff",
-                                                boxShadow: "0 0 10px rgba(255, 255, 255, 0.5) inset",
-                                                outline: "none",
-                                                background: "transparent",
-                                                color: "#fff",
-                                                textShadow: "0 0 10px rgba(255, 255, 255, 0.5)"
+                                                border: "2px solid #ccc",
+                                                outline: "none"
                                             },
                                             required: true
                                         })
@@ -193,7 +209,8 @@ const ModalForm = ()=>{
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
                                     style: {
                                         display: "flex",
-                                        flexDirection: "column"
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
                                     },
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
@@ -205,16 +222,8 @@ const ModalForm = ()=>{
                                             style: {
                                                 padding: "5px",
                                                 borderRadius: "4px",
-                                                border: "2px solid #fff",
-                                                boxShadow: "0 0 10px rgba(255, 255, 255, 0.5) inset",
-                                                outline: "none",
-                                                background: "transparent",
-                                                color: "#fff",
-                                                textShadow: "0 0 10px rgba(255, 255, 255, 0.5)",
-                                                appearance: "none",
-                                                /* Hide the default arrow */ WebkitAppearance: "none",
-                                                /* Removearrow in Chrome/Safari */ MozAppearance: "none",
-                                                /* Remove arrow in Firefox */ paddingRight: "20px"
+                                                border: "2px solid #ccc",
+                                                outline: "none"
                                             },
                                             required: true,
                                             children: [
@@ -309,7 +318,8 @@ const ModalForm = ()=>{
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
                                     style: {
                                         display: "flex",
-                                        flexDirection: "column"
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
                                     },
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
@@ -321,16 +331,8 @@ const ModalForm = ()=>{
                                             style: {
                                                 padding: "5px",
                                                 borderRadius: "4px",
-                                                border: "2px solid #fff",
-                                                boxShadow: "0 0 10px rgba(255, 255, 255, 0.5) inset",
-                                                outline: "none",
-                                                background: "transparent",
-                                                color: "#fff",
-                                                textShadow: "0 0 10px rgba(255, 255, 255, 0.5)",
-                                                appearance: "none",
-                                                /* Hide the default arrow */ WebkitAppearance: "none",
-                                                /* Removearrow in Chrome/Safari */ MozAppearance: "none",
-                                                /* Remove arrow in Firefox */ paddingRight: "20px"
+                                                border: "2px solid #ccc",
+                                                outline: "none"
                                             },
                                             required: true,
                                             children: [
@@ -425,7 +427,8 @@ const ModalForm = ()=>{
                                 /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
                                     style: {
                                         display: "flex",
-                                        flexDirection: "column"
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
                                     },
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
@@ -439,14 +442,46 @@ const ModalForm = ()=>{
                                             style: {
                                                 padding: "5px",
                                                 borderRadius: "4px",
-                                                border: "2px solid #fff",
-                                                boxShadow: "0 0 10px rgba(255, 255, 255, 0.5) inset",
-                                                outline: "none",
-                                                background: "transparent",
-                                                color: "#fff",
-                                                textShadow: "0 0 10px rgba(255, 255, 255, 0.5)"
+                                                border: "2px solid #ccc",
+                                                outline: "none"
                                             },
                                             required: true
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
+                                    style: {
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
+                                    },
+                                    children: [
+                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                            type: "checkbox",
+                                            name: "isOperable",
+                                            checked: formData.isOperable,
+                                            onChange: handleInputChange
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                            children: "Is the car operable?"
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
+                                    style: {
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        marginBottom: "10px"
+                                    },
+                                    children: [
+                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                            type: "checkbox",
+                                            name: "openAirCarrier",
+                                            checked: formData.openAirCarrier,
+                                            onChange: handleInputChange
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                            children: "Open air carrier preferred?"
                                         })
                                     ]
                                 }),
@@ -454,14 +489,62 @@ const ModalForm = ()=>{
                                     type: "submit",
                                     style: {
                                         padding: "8px 16px",
-                                        borderRadius: "50px",
+                                        borderRadius: "4px",
                                         backgroundColor: "#333",
                                         color: "#fff",
                                         border: "none",
-                                        cursor: "pointer",
-                                        marginTop: "20px"
+                                        marginTop: "16px",
+                                        cursor: "pointer"
                                     },
-                                    children: "Submit"
+                                    children: "Calculate"
+                                })
+                            ]
+                        })
+                    ]
+                }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                    style: {
+                        backgroundColor: "white",
+                        borderRadius: "8px",
+                        padding: "20px",
+                        maxWidth: "90%",
+                        maxHeight: "90%",
+                        overflow: "auto"
+                    },
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx("h2", {
+                            style: {
+                                color: "black"
+                            },
+                            children: "Estimated Price"
+                        }),
+                        isCalculating ? /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                            className: "text-center text-xl",
+                            children: "Calculating..."
+                        }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                                    style: {
+                                        position: "absolute",
+                                        top: "10px",
+                                        right: "10px",
+                                        cursor: "pointer"
+                                    },
+                                    onClick: ()=>setIsOpen(false),
+                                    children: "\xd7"
+                                }),
+                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
+                                    style: {
+                                        color: "black"
+                                    },
+                                    children: [
+                                        "Your estimated price is: ",
+                                        estimatedPrice
+                                    ]
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                                    className: "btn-sm text-white bg-purple-600 hover:bg-purple-700",
+                                    onClick: ()=>setIsOpen(false),
+                                    children: "Book Now"
                                 })
                             ]
                         })
@@ -694,22 +777,6 @@ function Header() {
         })
     });
 }
-
-
-/***/ }),
-
-/***/ 7164:
-/***/ ((module) => {
-
-// Exports
-module.exports = {
-	"modal": "modalForm_modal__J61Nx",
-	"fadeIn": "modalForm_fadeIn__xJR8D",
-	"modalContent": "modalForm_modalContent__dObx2",
-	"closeButton": "modalForm_closeButton__eC6Vx",
-	"qform": "modalForm_qform__nvQYd",
-	"fadeOut": "modalForm_fadeOut__dLWWG"
-};
 
 
 /***/ }),
