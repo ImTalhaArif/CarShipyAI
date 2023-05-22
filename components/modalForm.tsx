@@ -1,18 +1,79 @@
 import React, { useState, useEffect } from 'react';
 
+interface Question {
+  label: string;
+  name: string;
+  type: 'text' | 'checkbox' | 'number' | 'date' | 'location' | 'email';
+}
+
 const ModalForm: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-    isOperable: false,
-    openAirCarrier: false,
-    shipTo: '',
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState<{ [key: string]: string | boolean }>({});
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState('');
-  const [isCalculating, setIsCalculating] = useState(false);
+
+  const questions: Question[] = [
+    {
+      label: 'Your Name',
+      name: 'name',
+      type: 'text',
+    },
+    {
+      label: 'Email Address',
+      name: 'email',
+      type: 'email',
+    },
+    {
+      label: 'Phone Number',
+      name: 'number',
+      type: 'number',
+    },
+    {
+      label: 'The model of Car',
+      name: 'model',
+      type: 'text',
+    },
+    {
+      label: 'The make of Car',
+      name: 'make',
+      type: 'text',
+    },
+    {
+      label: 'The year of Car',
+      name: 'make',
+      type: 'number',
+    },
+    {
+      label: 'Is the Vehicle Operable?',
+      name: 'operable',
+      type: 'checkbox',
+    },
+    {
+      label: 'Would you prefer an oper air carrier?',
+      name: 'carrier',
+      type: 'checkbox',
+    },
+    {
+      label: 'Pick up City',
+      name: 'city',
+      type: 'text',
+    },
+    {
+      label: 'Desired Pick up date',
+      name: 'dates',
+      type: 'date',
+    },
+    {
+      label: 'Destination City',
+      name: 'destination',
+      type: 'text',
+    },
+    
+    // Add more questions here
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
@@ -20,284 +81,155 @@ const ModalForm: React.FC = () => {
     setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsCalculating(true);
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
 
     setTimeout(() => {
-      const basePrice = 200;
-      const shipToOptions = [
-        'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI',
-        'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD'
-      ];
-      const selectedIndex = shipToOptions.indexOf(formData.shipTo);
-      const price = 21 * 100;
+      setIsSubmitting(false);
+      setIsLoading(true);
 
-      setEstimatedPrice(`$${price}`);
-      setIsSubmitted(true);
-      setIsCalculating(false);
+      // Simulate loading time
+      setTimeout(() => {
+        const basePrice = 1200;
+        const price = basePrice + Math.floor(Math.random() * 5) * 50; // Generate random price
+        setEstimatedPrice(`$${price}`);
+        setIsLoading(false);
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      }, 6000);
     }, 3000);
   };
 
   const handleBookNow = () => {
-    console.log('Book Now clicked');
-
+    alert('Details will be emailed to you shortly');
+    window.location.reload();
   };
 
   useEffect(() => {
-    if (isCalculating) {
-      setIsOpen(true);
+    if (currentQuestionIndex === questions.length + 1) {
+      setIsOpen(false);
+      setCurrentQuestionIndex(0);
     }
-  }, [isCalculating]);
+  }, [currentQuestionIndex, questions.length]);
 
   return (
     <div>
-      <button className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" onClick={() => setIsOpen(true)}>
+      <button
+        className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3"
+        onClick={() => setIsOpen(true)}
+        style={{
+          backgroundColor: '#6B46C1',
+          color: 'white',
+          padding: '0.5rem 1rem',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '14px',
+          cursor: 'pointer',
+        }}
+      >
         FREE QUOTE
       </button>
 
       {isOpen && (
         <div
+          className="modal-overlay"
           style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             position: 'fixed',
             top: 0,
             left: 0,
-            right: 0,
-            bottom: 0,
+            width: '100%',
+            height: '100%',
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            zIndex: 9999,
+            alignItems: 'center',
           }}
         >
-          {!isSubmitted ? (
-            <div
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '8px',
-                padding: '20px',
-                maxWidth: '90%',
-                maxHeight: '90%',
-                overflow: 'auto',
-              }}
-            >
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setIsOpen(false)}
-              >
-                &times;
-              </span>
+          <div
+            className="modal-content"
+            style={{
+              backgroundColor: 'transparent',
+              color: 'white',
+              padding: '2rem',
+              borderRadius: '4px',
+              maxWidth: '400px',
+              textAlign: 'center',
+            }}
+          >
+            {currentQuestionIndex < questions.length && (
+              <div>
+                <h2>{questions[currentQuestionIndex].label}</h2>
 
-              <h2>Get A Free Quote</h2>
-
-              <form onSubmit={handleSubmit} style={{color:'black'}}>
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <span>Car Model:</span>
-                <input
-                  type="text"
-                  name="carModel"
-                  placeholder="Enter Car Model"
-                  onChange={handleInputChange}
-                  style={{
-                    padding: '5px',
-                    borderRadius: '4px',
-                    border: '2px solid #ccc',
-                    outline: 'none',
-                  }}
-                  required
-                />
-              </label>
-
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <span>Car Year:</span>
-                <input
-                  type="number"
-                  name="carYear"
-                  placeholder="Enter Car Year"
-                  onChange={handleInputChange}
-                  style={{
-                    padding: '5px',
-                    borderRadius: '4px',
-                    border: '2px solid #ccc',
-                    outline: 'none',
-                  }}
-                  required
-                />
-              </label>
-
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <span>Ship From:</span>
-                <select
-                  name="location"
-                  onChange={handleInputChange}
-                  style={{
-                    padding: '5px',
-                    borderRadius: '4px',
-                    border: '2px solid #ccc',
-                    outline: 'none',
-                  }}
-                  required
-                >
-                  <option value="">Select a State</option>
-                  <option value="AL">Alabama</option>
-               <option value="AK">Alaska</option>
-               <option value="AZ">Arizona</option>
-               <option value="AR">Arkansas</option>
-               <option value="CA">California</option>
-               <option value="CO">Colorado</option>
-               <option value="CT">Connecticut</option>
-               <option value="DE">Delaware</option>
-               <option value="FL">Florida</option>
-               <option value="GA">Georgia</option>
-               <option value="HI">Hawaii</option>
-               <option value="ID">Idaho</option>
-               <option value="IL">Illinois</option>
-               <option value="IN">Indiana</option>
-               <option value="IA">Iowa</option>
-               <option value="KS">Kansas</option>
-               <option value="KY">Kentucky</option>
-               <option value="LA">Louisiana</option>
-               <option value="ME">Maine</option>
-               <option value="MD">Maryland</option>
-                </select>
-              </label>
-
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <span>Ship To:</span>
-                <select
-                  name="location"
-                  onChange={handleInputChange}
-                  style={{
-                    padding: '5px',
-                    borderRadius: '4px',
-                    border: '2px solid #ccc',
-                    outline: 'none',
-                  }}
-                  required
-                >
-                  <option value="">Select a State</option>
-                  <option value="AL">Alabama</option>
-               <option value="AK">Alaska</option>
-               <option value="AZ">Arizona</option>
-               <option value="AR">Arkansas</option>
-               <option value="CA">California</option>
-               <option value="CO">Colorado</option>
-               <option value="CT">Connecticut</option>
-               <option value="DE">Delaware</option>
-               <option value="FL">Florida</option>
-               <option value="GA">Georgia</option>
-               <option value="HI">Hawaii</option>
-               <option value="ID">Idaho</option>
-               <option value="IL">Illinois</option>
-               <option value="IN">Indiana</option>
-               <option value="IA">Iowa</option>
-               <option value="KS">Kansas</option>
-               <option value="KY">Kentucky</option>
-               <option value="LA">Louisiana</option>
-               <option value="ME">Maine</option>
-               <option value="MD">Maryland</option>
-                </select>
-              </label>
-
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <span>Delivery Date:</span>
-                <input
-                  type="date"
-                  name="carYear"
-                  placeholder="Delivery Date"
-                  onChange={handleInputChange}
-                  style={{
-                    padding: '5px',
-                    borderRadius: '4px',
-                    border: '2px solid #ccc',
-                    outline: 'none',
-                  }}
-                  required
-                />
-              </label>
-
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <input
-                  type="checkbox"
-                  name="isOperable"
-                  checked={formData.isOperable}
-                  onChange={handleInputChange}
-                />
-                <span>Is the car operable?</span>
-              </label>
-
-              <label style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                <input
-                  type="checkbox"
-                  name="openAirCarrier"
-                  checked={formData.openAirCarrier}
-                  onChange={handleInputChange}
-                />
-                <span>Open air carrier preferred?</span>
-              </label>
-
+                {questions[currentQuestionIndex].type === 'checkbox' ? (
+                  <label style={{ display: 'inline-flex', alignItems: 'center', marginTop: '1.5rem' }}>
+                    <input
+                      type="checkbox"
+                      name={questions[currentQuestionIndex].name}
+                      checked={formData[questions[currentQuestionIndex].name] as boolean}
+                      onChange={handleInputChange}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    <span>{questions[currentQuestionIndex].label}</span>
+                  </label>
+                ) : (
+                  <input
+                    type="text"
+                    name={questions[currentQuestionIndex].name}
+                    value={formData[questions[currentQuestionIndex].name] as string}
+                    onChange={handleInputChange}
+                    style={{ marginBottom: '1rem', padding: '0.5rem' }}
+                  />
+                )}
 
                 <button
-                  type="submit"
+                  className="form-button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
                   style={{
-                    padding: '8px 16px',
-                    borderRadius: '4px',
-                    backgroundColor: '#333',
-                    color: '#fff',
+                    backgroundColor: '#6B46C1',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
                     border: 'none',
-                    marginTop: '16px',
+                    borderRadius: '4px',
+                    fontSize: '14px',
                     cursor: 'pointer',
                   }}
                 >
-                  Calculate
+                  {isSubmitting ? 'Submitting...' : 'Next'}
                 </button>
-              </form>
-            </div>
-          ) : (
-            <div
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '8px',
-                padding: '20px',
-                maxWidth: '90%',
-                maxHeight: '90%',
-                overflow: 'auto',
-              }}
-            >
-              <h2 style={{color: 'black'}}>Estimated Price</h2>
+              </div>
+            )}
 
-              {isCalculating ? (
-                <div className="text-center text-xl">Calculating...</div>
-              ) : (
-                <div>
-                     <span
-                style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setIsOpen(false)}
-              >
-                &times;
-              </span>
-                  <p style={{color: 'black'}}>Your estimated price is: {estimatedPrice}</p>
-                  <button
-                    className="btn-sm text-white bg-purple-600 hover:bg-purple-700"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Book Now
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+            {currentQuestionIndex === questions.length && (
+              <div>
+                {isLoading ? (
+                  <div>Loading...</div>
+                ) : (
+                  <div>
+                    <h2>Estimated Price:</h2>
+                    <p>{estimatedPrice}</p>
+
+                    <button
+                      className="form-button"
+                      onClick={handleBookNow}
+                      style={{
+                        backgroundColor: '#6B46C1',
+                        color: 'white',
+                        padding: '0.5rem 1rem',
+                        border: 'none',
+                        borderRadius: '4px',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

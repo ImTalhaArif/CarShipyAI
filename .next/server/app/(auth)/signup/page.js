@@ -33,7 +33,7 @@ module.exports = require("next/dist/compiled/react/jsx-runtime");
 
 /***/ }),
 
-/***/ 1090:
+/***/ 5232:
 /***/ ((module) => {
 
 module.exports = require("next/dist/server/app-render/get-segment-param.js");

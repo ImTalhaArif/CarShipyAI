@@ -44,17 +44,68 @@ var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
 
 const ModalForm = ()=>{
     const [isOpen, setIsOpen] = (0,react_.useState)(false);
-    const [formData, setFormData] = (0,react_.useState)({
-        name: "",
-        email: "",
-        message: "",
-        isOperable: false,
-        openAirCarrier: false,
-        shipTo: ""
-    });
-    const [isSubmitted, setIsSubmitted] = (0,react_.useState)(false);
+    const [formData, setFormData] = (0,react_.useState)({});
+    const [currentQuestionIndex, setCurrentQuestionIndex] = (0,react_.useState)(0);
+    const [isSubmitting, setIsSubmitting] = (0,react_.useState)(false);
+    const [isLoading, setIsLoading] = (0,react_.useState)(false);
     const [estimatedPrice, setEstimatedPrice] = (0,react_.useState)("");
-    const [isCalculating, setIsCalculating] = (0,react_.useState)(false);
+    const questions = [
+        {
+            label: "Your Name",
+            name: "name",
+            type: "text"
+        },
+        {
+            label: "Email Address",
+            name: "email",
+            type: "email"
+        },
+        {
+            label: "Phone Number",
+            name: "number",
+            type: "number"
+        },
+        {
+            label: "The model of Car",
+            name: "model",
+            type: "text"
+        },
+        {
+            label: "The make of Car",
+            name: "make",
+            type: "text"
+        },
+        {
+            label: "The year of Car",
+            name: "make",
+            type: "number"
+        },
+        {
+            label: "Is the Vehicle Operable?",
+            name: "operable",
+            type: "checkbox"
+        },
+        {
+            label: "Would you prefer an oper air carrier?",
+            name: "carrier",
+            type: "checkbox"
+        },
+        {
+            label: "Pick up City",
+            name: "city",
+            type: "text"
+        },
+        {
+            label: "Desired Pick up date",
+            name: "dates",
+            type: "date"
+        },
+        {
+            label: "Destination City",
+            name: "destination",
+            type: "text"
+        }
+    ];
     const handleInputChange = (e)=>{
         const { name , value , type , checked  } = e.target;
         const inputValue = type === "checkbox" ? checked : value;
@@ -63,490 +114,155 @@ const ModalForm = ()=>{
                 [name]: inputValue
             }));
     };
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        setIsCalculating(true);
+    const handleSubmit = (event)=>{
+        event.preventDefault();
+        setIsSubmitting(true);
+        setCurrentQuestionIndex((prevIndex)=>prevIndex + 1);
         setTimeout(()=>{
-            const basePrice = 200;
-            const shipToOptions = [
-                "AL",
-                "AK",
-                "AZ",
-                "AR",
-                "CA",
-                "CO",
-                "CT",
-                "DE",
-                "FL",
-                "GA",
-                "HI",
-                "ID",
-                "IL",
-                "IN",
-                "IA",
-                "KS",
-                "KY",
-                "LA",
-                "ME",
-                "MD"
-            ];
-            const selectedIndex = shipToOptions.indexOf(formData.shipTo);
-            const price = 21 * 100;
-            setEstimatedPrice(`$${price}`);
-            setIsSubmitted(true);
-            setIsCalculating(false);
+            setIsSubmitting(false);
+            setIsLoading(true);
+            // Simulate loading time
+            setTimeout(()=>{
+                const basePrice = 1200;
+                const price = basePrice + Math.floor(Math.random() * 5) * 50; // Generate random price
+                setEstimatedPrice(`$${price}`);
+                setIsLoading(false);
+                setCurrentQuestionIndex((prevIndex)=>prevIndex + 1);
+            }, 6000);
         }, 3000);
     };
     const handleBookNow = ()=>{
-        console.log("Book Now clicked");
+        alert("Details will be emailed to you shortly");
+        window.location.reload();
     };
     (0,react_.useEffect)(()=>{
-        if (isCalculating) {
-            setIsOpen(true);
+        if (currentQuestionIndex === questions.length + 1) {
+            setIsOpen(false);
+            setCurrentQuestionIndex(0);
         }
     }, [
-        isCalculating
+        currentQuestionIndex,
+        questions.length
     ]);
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx("button", {
                 className: "btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3",
                 onClick: ()=>setIsOpen(true),
+                style: {
+                    backgroundColor: "#6B46C1",
+                    color: "white",
+                    padding: "0.5rem 1rem",
+                    border: "none",
+                    borderRadius: "4px",
+                    fontSize: "14px",
+                    cursor: "pointer"
+                },
                 children: "FREE QUOTE"
             }),
             isOpen && /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                className: "modal-overlay",
                 style: {
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
                     position: "fixed",
                     top: 0,
                     left: 0,
-                    right: 0,
-                    bottom: 0,
+                    width: "100%",
+                    height: "100%",
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: "rgba(0, 0, 0, 0.8)",
-                    zIndex: 9999
+                    alignItems: "center"
                 },
-                children: !isSubmitted ? /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                    className: "modal-content",
                     style: {
-                        backgroundColor: "white",
-                        borderRadius: "8px",
-                        padding: "20px",
-                        maxWidth: "90%",
-                        maxHeight: "90%",
-                        overflow: "auto"
+                        backgroundColor: "transparent",
+                        color: "white",
+                        padding: "2rem",
+                        borderRadius: "4px",
+                        maxWidth: "400px",
+                        textAlign: "center"
                     },
                     children: [
-                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                            style: {
-                                position: "absolute",
-                                top: "10px",
-                                right: "10px",
-                                cursor: "pointer"
-                            },
-                            onClick: ()=>setIsOpen(false),
-                            children: "\xd7"
-                        }),
-                        /*#__PURE__*/ jsx_runtime_.jsx("h2", {
-                            children: "Get A Free Quote"
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("form", {
-                            onSubmit: handleSubmit,
-                            style: {
-                                color: "black"
-                            },
+                        currentQuestionIndex < questions.length && /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                             children: [
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
-                                    style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Car Model:"
-                                        }),
-                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                            type: "text",
-                                            name: "carModel",
-                                            placeholder: "Enter Car Model",
-                                            onChange: handleInputChange,
-                                            style: {
-                                                padding: "5px",
-                                                borderRadius: "4px",
-                                                border: "2px solid #ccc",
-                                                outline: "none"
-                                            },
-                                            required: true
-                                        })
-                                    ]
+                                /*#__PURE__*/ jsx_runtime_.jsx("h2", {
+                                    children: questions[currentQuestionIndex].label
                                 }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
+                                questions[currentQuestionIndex].type === "checkbox" ? /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
                                     style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Car Year:"
-                                        }),
-                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                            type: "number",
-                                            name: "carYear",
-                                            placeholder: "Enter Car Year",
-                                            onChange: handleInputChange,
-                                            style: {
-                                                padding: "5px",
-                                                borderRadius: "4px",
-                                                border: "2px solid #ccc",
-                                                outline: "none"
-                                            },
-                                            required: true
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
-                                    style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Ship From:"
-                                        }),
-                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("select", {
-                                            name: "location",
-                                            onChange: handleInputChange,
-                                            style: {
-                                                padding: "5px",
-                                                borderRadius: "4px",
-                                                border: "2px solid #ccc",
-                                                outline: "none"
-                                            },
-                                            required: true,
-                                            children: [
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "",
-                                                    children: "Select a State"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AL",
-                                                    children: "Alabama"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AK",
-                                                    children: "Alaska"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AZ",
-                                                    children: "Arizona"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AR",
-                                                    children: "Arkansas"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "CA",
-                                                    children: "California"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "CO",
-                                                    children: "Colorado"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "CT",
-                                                    children: "Connecticut"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "DE",
-                                                    children: "Delaware"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "FL",
-                                                    children: "Florida"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "GA",
-                                                    children: "Georgia"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "HI",
-                                                    children: "Hawaii"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "ID",
-                                                    children: "Idaho"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "IL",
-                                                    children: "Illinois"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "IN",
-                                                    children: "Indiana"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "IA",
-                                                    children: "Iowa"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "KS",
-                                                    children: "Kansas"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "KY",
-                                                    children: "Kentucky"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "LA",
-                                                    children: "Louisiana"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "ME",
-                                                    children: "Maine"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "MD",
-                                                    children: "Maryland"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
-                                    style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Ship To:"
-                                        }),
-                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("select", {
-                                            name: "location",
-                                            onChange: handleInputChange,
-                                            style: {
-                                                padding: "5px",
-                                                borderRadius: "4px",
-                                                border: "2px solid #ccc",
-                                                outline: "none"
-                                            },
-                                            required: true,
-                                            children: [
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "",
-                                                    children: "Select a State"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AL",
-                                                    children: "Alabama"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AK",
-                                                    children: "Alaska"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AZ",
-                                                    children: "Arizona"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "AR",
-                                                    children: "Arkansas"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "CA",
-                                                    children: "California"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "CO",
-                                                    children: "Colorado"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "CT",
-                                                    children: "Connecticut"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "DE",
-                                                    children: "Delaware"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "FL",
-                                                    children: "Florida"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "GA",
-                                                    children: "Georgia"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "HI",
-                                                    children: "Hawaii"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "ID",
-                                                    children: "Idaho"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "IL",
-                                                    children: "Illinois"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "IN",
-                                                    children: "Indiana"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "IA",
-                                                    children: "Iowa"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "KS",
-                                                    children: "Kansas"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "KY",
-                                                    children: "Kentucky"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "LA",
-                                                    children: "Louisiana"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "ME",
-                                                    children: "Maine"
-                                                }),
-                                                /*#__PURE__*/ jsx_runtime_.jsx("option", {
-                                                    value: "MD",
-                                                    children: "Maryland"
-                                                })
-                                            ]
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
-                                    style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Delivery Date:"
-                                        }),
-                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                            type: "date",
-                                            name: "carYear",
-                                            placeholder: "Delivery Date",
-                                            onChange: handleInputChange,
-                                            style: {
-                                                padding: "5px",
-                                                borderRadius: "4px",
-                                                border: "2px solid #ccc",
-                                                outline: "none"
-                                            },
-                                            required: true
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
-                                    style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        marginTop: "1.5rem"
                                     },
                                     children: [
                                         /*#__PURE__*/ jsx_runtime_.jsx("input", {
                                             type: "checkbox",
-                                            name: "isOperable",
-                                            checked: formData.isOperable,
-                                            onChange: handleInputChange
+                                            name: questions[currentQuestionIndex].name,
+                                            checked: formData[questions[currentQuestionIndex].name],
+                                            onChange: handleInputChange,
+                                            style: {
+                                                marginRight: "0.5rem"
+                                            }
                                         }),
                                         /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Is the car operable?"
+                                            children: questions[currentQuestionIndex].label
                                         })
                                     ]
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
+                                }) : /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                                    type: "text",
+                                    name: questions[currentQuestionIndex].name,
+                                    value: formData[questions[currentQuestionIndex].name],
+                                    onChange: handleInputChange,
                                     style: {
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        marginBottom: "10px"
-                                    },
-                                    children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                            type: "checkbox",
-                                            name: "openAirCarrier",
-                                            checked: formData.openAirCarrier,
-                                            onChange: handleInputChange
-                                        }),
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: "Open air carrier preferred?"
-                                        })
-                                    ]
+                                        marginBottom: "1rem",
+                                        padding: "0.5rem"
+                                    }
                                 }),
                                 /*#__PURE__*/ jsx_runtime_.jsx("button", {
-                                    type: "submit",
+                                    className: "form-button",
+                                    onClick: handleSubmit,
+                                    disabled: isSubmitting,
                                     style: {
-                                        padding: "8px 16px",
-                                        borderRadius: "4px",
-                                        backgroundColor: "#333",
-                                        color: "#fff",
+                                        backgroundColor: "#6B46C1",
+                                        color: "white",
+                                        padding: "0.5rem 1rem",
                                         border: "none",
-                                        marginTop: "16px",
+                                        borderRadius: "4px",
+                                        fontSize: "14px",
                                         cursor: "pointer"
                                     },
-                                    children: "Calculate"
+                                    children: isSubmitting ? "Submitting..." : "Next"
                                 })
                             ]
-                        })
-                    ]
-                }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                    style: {
-                        backgroundColor: "white",
-                        borderRadius: "8px",
-                        padding: "20px",
-                        maxWidth: "90%",
-                        maxHeight: "90%",
-                        overflow: "auto"
-                    },
-                    children: [
-                        /*#__PURE__*/ jsx_runtime_.jsx("h2", {
-                            style: {
-                                color: "black"
-                            },
-                            children: "Estimated Price"
                         }),
-                        isCalculating ? /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                            className: "text-center text-xl",
-                            children: "Calculating..."
-                        }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                    style: {
-                                        position: "absolute",
-                                        top: "10px",
-                                        right: "10px",
-                                        cursor: "pointer"
-                                    },
-                                    onClick: ()=>setIsOpen(false),
-                                    children: "\xd7"
-                                }),
-                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                                    style: {
-                                        color: "black"
-                                    },
-                                    children: [
-                                        "Your estimated price is: ",
-                                        estimatedPrice
-                                    ]
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx("button", {
-                                    className: "btn-sm text-white bg-purple-600 hover:bg-purple-700",
-                                    onClick: ()=>setIsOpen(false),
-                                    children: "Book Now"
-                                })
-                            ]
+                        currentQuestionIndex === questions.length && /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                            children: isLoading ? /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                                children: "Loading..."
+                            }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx("h2", {
+                                        children: "Estimated Price:"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("p", {
+                                        children: estimatedPrice
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                                        className: "form-button",
+                                        onClick: handleBookNow,
+                                        style: {
+                                            backgroundColor: "#6B46C1",
+                                            color: "white",
+                                            padding: "0.5rem 1rem",
+                                            border: "none",
+                                            borderRadius: "4px",
+                                            fontSize: "14px",
+                                            cursor: "pointer"
+                                        },
+                                        children: "Book Now"
+                                    })
+                                ]
+                            })
                         })
                     ]
                 })

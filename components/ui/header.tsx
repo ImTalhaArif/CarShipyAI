@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import ModalForm from '@/components/modalForm'
+import Interview from '@/components/Interview'
 import MobileMenu from './mobile-menu'
 
 

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .modal-content {
+      background-color: transparent;
+      border: none;
+      animation: fade-in 0.5s;
+    }
+
+    .modal.fade .modal-dialog {
+      transform: translate(0, -50px);
+      transition: transform 0.3s ease-out;
+    }
+
+    .modal.fade.show .modal-dialog {
+      transform: translate(0, 0);
+    }
+
+    .modal.fade .modal-content {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .modal.fade.show .modal-content {
+      opacity: 1;
+    }
+
+    .modal.fade.show .modal-body {
+      animation: fade-in 0.5s;
+    }
+
+    .modal.fade.hide .modal-body {
+      animation: fade-out 0.5s;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fade-out {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    .fade {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .fade.show {
+      opacity: 1;
+    }
+
+    .fade.show .form-group,
+    .fade.show .btn-primary {
+      transition-delay: 0.2s;
+    }
+
+    .fade.show .btn-primary {
+      transition-delay: 0.4s;
+    }
+
+    /* Additional CSS for visibility and black theme */
+    .modal-content {
+      background-color: #000;
+    }
+
+    .modal-header,
+    .modal-footer {
+      border-color: #000;
+    }
+
+    .modal-title {
+      color: #fff;
+    }
+
+    .form-control {
+      color: #000;
+      background-color: #fff;
+    }
+
+    .form-group,
+    .btn-primary {
+      transition: opacity 0.3s ease-out;
+    }
+
+    .form-group.show,
+    .btn-primary.show {
+      opacity: 1;
+    }
+
+    .invalid-feedback {
+      color: #fff;
+    }
+  </style>
+  <title>GET A FREE QUOTE</title>
+</head>
+<body>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">Open Modal</button>
+
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Tell us A bit of Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="form" class="needs-validation" novalidate>
+            <div class="form-group fade">
+              
+            </div>
+            <input type="submit" value="Okay!" style="background-color: purple;"  class="btn btn-lg text-white bg-purple-600 hover:bg-purple-700 ml-3"/>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    const form = document.getElementById('form');
+    const modal = document.getElementById('modal');
+    const questions = ["Car Make", "Car Make", "Car Year", "Shipment Date", "Ship To","Open Carrier?"];
+    let currentQuestionIndex = 0;
+
+    function showModal() {
+      modal.style.display = 'block';
+      showNextQuestion();
+    }
+
+    function hideModal() {
+      modal.style.display = 'none';
+    }
+
+    function showNextQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        hideModal();
+        showLoadingModal();
+        return;
+      }
+
+      const question = questions[currentQuestionIndex];
+      const inputField = document.createElement('input');
+      inputField.type = 'text';
+      inputField.id = `input-${currentQuestionIndex}`;
+      inputField.placeholder = question;
+      inputField.required = true;
+      inputField.classList.add('form-control');
+
+      const label = document.createElement('label');
+      label.textContent = question;
+      label.htmlFor = `input-${currentQuestionIndex}`;
+
+      const formGroup = document.createElement('div');
+      formGroup.classList.add('form-group', 'fade');
+      formGroup.appendChild(label);
+      formGroup.appendChild(inputField);
+
+      const submitButton = document.createElement('button');
+      submitButton.type = 'submit';
+      submitButton.style = 'background-color: purple';
+      submitButton.classList.add('btn', 'btn-primary', 'fade');
+      submitButton.innerText = 'Next';
+
+      form.innerHTML = '';
+      form.appendChild(formGroup);
+      form.appendChild(submitButton);
+      formGroup.classList.add('show');
+      submitButton.classList.add('show');
+    }
+
+    function showLoadingModal() {
+      const loadingModal = document.createElement('div');
+      loadingModal.classList.add('modal', 'fade', 'show', 'd-block');
+      loadingModal.id = 'loadingModal';
+      loadingModal.tabIndex = '-1';
+      loadingModal.setAttribute('role', 'dialog');
+      loadingModal.setAttribute('aria-hidden', 'true');
+      loadingModal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body text-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Calculating...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(loadingModal);
+
+      setTimeout(function () {
+        hideLoadingModal();
+        showResultModal();
+      }, 3000);
+    }
+
+    function hideLoadingModal() {
+      const loadingModal = document.getElementById('loadingModal');
+      document.body.removeChild(loadingModal);
+    }
+
+    function showResultModal() {
+      const resultModal = document.createElement('div');
+      resultModal.classList.add('modal', 'fade', 'show', 'd-block');
+      resultModal.id = 'resultModal';
+      resultModal.tabIndex = '-1';
+      resultModal.setAttribute('role', 'dialog');
+      resultModal.setAttribute('aria-hidden', 'true');
+
+      // Generate random 4-digit number for estimated price
+      const estimatedPrice = Math.floor(1000 + Math.random() * 9000);
+
+      resultModal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Result</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="resultText"></div>
+              <div id="priceText">Estimated Price: $${estimatedPrice}</div>
+            </div>
+            <div class="modal-footer">
+              <button style="background-color: purple" data-dismiss="modal" type="button" onclick="alert('We have received your details and will shortly get back to you ')" class="btn btn-primary" data-dismiss="modal">Book Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(resultModal);
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      form.classList.add('was-validated');
+      if (form.checkValidity() === true) {
+        currentQuestionIndex++;
+        showNextQuestion();
+      }
+    });
+
+    modal.addEventListener('shown.bs.modal', function () {
+      showNextQuestion();
+    });
+
+    modal.addEventListener('hidden.bs.modal', function () {
+      currentQuestionIndex = 0;
+      form.classList.remove('was-validated');
+    });
+  </script>
+</body>
+</html>
