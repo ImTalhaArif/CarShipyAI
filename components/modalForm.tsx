@@ -1,50 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface Question {
   label: string;
   name: string;
-  type: 'text' | 'checkbox' | 'number' | 'date' | 'location' | 'email';
+  type: 'text' | 'checkbox' | 'number' | 'date' | 'location' | 'email' | 'select';
+  required?: boolean;
+  options?: string[]; // Add options property for select type
 }
 
 const ModalForm: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<{ [key: string]: string | boolean }>({});
-
+  const [formData, setFormData] = useState<{ [key: string]: string | boolean | Date | undefined }>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [estimatedPrice, setEstimatedPrice] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [estimatedPrice, setEstimatedPrice] = useState('');
 
   const questions: Question[] = [
     {
       label: 'Your Name',
       name: 'name',
       type: 'text',
+      required: true,
     },
     {
       label: 'Email Address',
       name: 'email',
       type: 'email',
+      required: true,
     },
     {
       label: 'Phone Number',
       name: 'number',
       type: 'number',
+      required: true,
     },
     {
       label: 'The model of Car',
       name: 'model',
       type: 'text',
+      required: true,
     },
     {
       label: 'The make of Car',
       name: 'make',
       type: 'text',
+      required: true,
     },
     {
       label: 'The year of Car',
-      name: 'make',
+      name: 'year',
       type: 'number',
+      required: true,
     },
     {
       label: 'Is the Vehicle Operable?',
@@ -52,53 +60,57 @@ const ModalForm: React.FC = () => {
       type: 'checkbox',
     },
     {
-      label: 'Would you prefer an oper air carrier?',
+      label: 'Would you prefer an open air carrier?',
       name: 'carrier',
       type: 'checkbox',
     },
     {
       label: 'Pick up City',
       name: 'city',
-      type: 'text',
+      type: 'select', // Change type to select
+      options: ['New York', 'California', 'Texas', 'Florida', 'Illinois', 'Pennsylvania', 'Ohio', 'Georgia', 'North Carolina', 'Michigan'], // Add options for states
+      required: true,
     },
     {
       label: 'Desired Pick up date',
       name: 'dates',
       type: 'date',
+      required: true,
     },
     {
       label: 'Destination City',
       name: 'destination',
-      type: 'text',
+      type: 'select', // Change type to select
+      options: ['New York', 'California', 'Texas', 'Florida', 'Illinois', 'Pennsylvania', 'Ohio', 'Georgia', 'North Carolina', 'Michigan'], // Add options for states
+      required: true,
     },
-    
-    // Add more questions here
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type, checked } = e.target as HTMLInputElement;
-    const inputValue = type === 'checkbox' ? checked : value;
+    const { name, value, type } = e.target;
+    const inputValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
+  };
+
+  const calculateEstimatedPrice = () => {
+    // Your calculation logic goes here
+    // Example: Set the estimated price based on some formula or algorithm
+    const price = Math.random() * 1000;
+    setEstimatedPrice(price);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    setIsSubmitting(true);
+    setFormData((prevData) => ({ ...prevData, [questions[currentQuestionIndex].name]: undefined }));
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    if (currentQuestionIndex === questions.length - 1) {
       setIsLoading(true);
-
-      // Simulate loading time
       setTimeout(() => {
-        const basePrice = 1200;
-        const price = basePrice + Math.floor(Math.random() * 5) * 50; // Generate random price
-        setEstimatedPrice(`$${price}`);
+        calculateEstimatedPrice();
         setIsLoading(false);
-        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      }, 6000);
-    }, 3000);
+      }, 3000);
+    }
   };
 
   const handleBookNow = () => {
@@ -106,12 +118,64 @@ const ModalForm: React.FC = () => {
     window.location.reload();
   };
 
-  useEffect(() => {
-    if (currentQuestionIndex === questions.length + 1) {
-      setIsOpen(false);
-      setCurrentQuestionIndex(0);
+  const renderQuestion = (question: Question) => {
+    switch (question.type) {
+      case 'checkbox':
+        return (
+          <label style={{ display: 'inline-flex', alignItems: 'center', marginTop: '1.5rem' }}>
+            <input
+              type="checkbox"
+              name={question.name}
+              checked={formData[question.name] as boolean | undefined}
+              onChange={handleInputChange}
+              style={{ marginRight: '0.5rem' }}
+            />
+            <span>{question.label}</span>
+          </label>
+        );
+      case 'date':
+        return (
+          <DatePicker
+            name={question.name}
+            selected={formData[question.name] as Date | undefined}
+            onChange={(date: Date) => setFormData((prevData) => ({ ...prevData, [question.name]: date }))}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="yyyy-MM-dd"
+            className="form-control"
+          />
+        );
+      case 'select':
+        return (
+          <select
+            name={question.name}
+            value={formData[question.name] as string | undefined}
+            onChange={handleInputChange}
+            style={{color:'black', fontWeight: 700}}
+            required={question.required}
+            className="form-control"
+          >
+            <option value="">Select an option</option>
+            {question.options?.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        );
+      default:
+        return (
+          <input
+            type={question.type}
+            name={question.name}
+            style={{ color: 'black', fontWeight: '700' }}
+            value={formData[question.name] as string | undefined}
+            onChange={handleInputChange}
+            required={question.required}
+            className="form-control"
+          />
+        );
     }
-  }, [currentQuestionIndex, questions.length]);
+  };
 
   return (
     <div>
@@ -161,31 +225,41 @@ const ModalForm: React.FC = () => {
               <div>
                 <h2>{questions[currentQuestionIndex].label}</h2>
 
-                {questions[currentQuestionIndex].type === 'checkbox' ? (
-                  <label style={{ display: 'inline-flex', alignItems: 'center', marginTop: '1.5rem' }}>
-                    <input
-                      type="checkbox"
-                      name={questions[currentQuestionIndex].name}
-                      checked={formData[questions[currentQuestionIndex].name] as boolean}
-                      onChange={handleInputChange}
-                      style={{ marginRight: '0.5rem' }}
-                    />
-                    <span>{questions[currentQuestionIndex].label}</span>
-                  </label>
+                <form onSubmit={handleSubmit}>
+                  {renderQuestion(questions[currentQuestionIndex])}
+
+                  <button
+                    className="form-button"
+                    type="submit"
+                    style={{
+                      backgroundColor: '#6B46C1',
+                      color: 'white',
+                      padding: '0.5rem 1rem',
+                      marginLeft: '3px',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontSize: '14px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Next
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {currentQuestionIndex === questions.length && (
+              <div>
+                <h2>Estimated Price:</h2>
+                {isLoading ? (
+                  <p>Loading...</p>
                 ) : (
-                  <input
-                    type="text"
-                    name={questions[currentQuestionIndex].name}
-                    value={formData[questions[currentQuestionIndex].name] as string}
-                    onChange={handleInputChange}
-                    style={{ marginBottom: '1rem', padding: '0.5rem' }}
-                  />
+                  <p>${estimatedPrice !== null ? estimatedPrice.toFixed(2) : 'N/A'}</p>
                 )}
 
                 <button
                   className="form-button"
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
+                  onClick={handleBookNow}
                   style={{
                     backgroundColor: '#6B46C1',
                     color: 'white',
@@ -196,37 +270,8 @@ const ModalForm: React.FC = () => {
                     cursor: 'pointer',
                   }}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Next'}
+                  Book Now
                 </button>
-              </div>
-            )}
-
-            {currentQuestionIndex === questions.length && (
-              <div>
-                {isLoading ? (
-                  <div>Loading...</div>
-                ) : (
-                  <div>
-                    <h2>Estimated Price:</h2>
-                    <p>{estimatedPrice}</p>
-
-                    <button
-                      className="form-button"
-                      onClick={handleBookNow}
-                      style={{
-                        backgroundColor: '#6B46C1',
-                        color: 'white',
-                        padding: '0.5rem 1rem',
-                        border: 'none',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      Book Now
-                    </button>
-                  </div>
-                )}
               </div>
             )}
           </div>

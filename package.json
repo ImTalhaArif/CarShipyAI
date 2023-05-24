@@ -18,7 +18,9 @@
     "next": "^13.4.3",
     "next-transpile-modules": "^10.0.0",
     "react": "18.2.0",
+    "react-datepicker": "^4.11.0",
     "react-dom": "18.2.0",
+    "react-google-maps": "^9.4.5",
     "react-i18next": "^12.3.1",
     "sharp": "^0.32.1",
     "typescript": "^5.0.4"
@@ -26,7 +28,8 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@types/aos": "^3.0.4",
-    "@types/react": "^18.2.6",
+    "@types/react": "^16.14.41",
+    "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "^18.2.4",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",

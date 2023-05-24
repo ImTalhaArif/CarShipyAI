@@ -290,7 +290,7 @@ __webpack_require__.r(__webpack_exports__);
         '(default)',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 6034)), "C:\\Users\\arif_\\Documents\\Carshipy Official\\app\\(default)\\page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2819)), "C:\\Users\\arif_\\Documents\\Carshipy Official\\app\\(default)\\page.tsx"],
           
         }]
       },
@@ -340,18 +340,17 @@ Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_re
 
 /***/ }),
 
-/***/ 3876:
+/***/ 1563:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4663));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7898));
 Promise.resolve(/* import() eager */).then(__webpack_require__.t.bind(__webpack_require__, 408, 23));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4187));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9201));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7369));
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7728));
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8759));
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4917))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4917));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 4187));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7369));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9201));
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3410))
 
 /***/ }),
 
@@ -766,81 +765,91 @@ function DefaultLayout({ children  }) {
 
 /***/ }),
 
-/***/ 7898:
+/***/ 3410:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ModalVideo)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6786);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8038);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6235);
-/* harmony import */ var _headlessui_react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(777);
-/* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8421);
-/* harmony import */ var next_image__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_image__WEBPACK_IMPORTED_MODULE_2__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ Hero)
+});
+
+// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__(6786);
+;// CONCATENATED MODULE: ./public/images/hero-image-01.jpg
+/* harmony default export */ const hero_image_01 = ({"src":"/_next/static/media/hero-image-01.1f6edd86.jpg","height":1152,"width":2048,"blurDataURL":"data:image/jpeg;base64,/9j/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAFAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAeEAACAgEFAQAAAAAAAAAAAAABAgADEQUiMTJBYf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCPr1Gxlv7KFQWbWx4Djj6YiIF//9k=","blurWidth":8,"blurHeight":5});
+// EXTERNAL MODULE: external "next/dist/compiled/react"
+var react_ = __webpack_require__(8038);
+// EXTERNAL MODULE: ./node_modules/@headlessui/react/dist/components/transitions/transition.js + 4 modules
+var transition = __webpack_require__(6235);
+// EXTERNAL MODULE: ./node_modules/@headlessui/react/dist/components/dialog/dialog.js + 30 modules
+var dialog = __webpack_require__(777);
+// EXTERNAL MODULE: ./node_modules/next/image.js
+var next_image = __webpack_require__(8421);
+var image_default = /*#__PURE__*/__webpack_require__.n(next_image);
+;// CONCATENATED MODULE: ./components/modal-video.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
 
 function ModalVideo({ thumb , thumbWidth , thumbHeight , thumbAlt , video , videoWidth , videoHeight  }) {
-    const [modalOpen, setModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const videoRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+    const [modalOpen, setModalOpen] = (0,react_.useState)(false);
+    const videoRef = (0,react_.useRef)(null);
+    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            /*#__PURE__*/ jsx_runtime_.jsx("div", {
+                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
                     className: "relative flex justify-center items-center",
                     "data-aos": "fade-up",
                     "data-aos-delay": "200",
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_2___default()), {
+                        /*#__PURE__*/ jsx_runtime_.jsx((image_default()), {
                             src: thumb,
                             width: thumbWidth,
                             height: thumbHeight,
                             alt: thumbAlt
                         }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("button", {
+                        /*#__PURE__*/ jsx_runtime_.jsx("button", {
                             className: "absolute group",
                             onClick: ()=>{
                                 setModalOpen(true);
                             },
                             "aria-label": "Watch the video",
-                            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", {
+                            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("svg", {
                                 className: "w-16 h-16 sm:w-20 sm:h-20 hover:opacity-75 transition duration-150 ease-in-out",
                                 viewBox: "0 0 88 88",
                                 xmlns: "http://www.w3.org/2000/svg",
                                 children: [
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("defs", {
-                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("linearGradient", {
+                                    /*#__PURE__*/ jsx_runtime_.jsx("defs", {
+                                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("linearGradient", {
                                             x1: "78.169%",
                                             y1: "9.507%",
                                             x2: "24.434%",
                                             y2: "90.469%",
                                             id: "a",
                                             children: [
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("stop", {
+                                                /*#__PURE__*/ jsx_runtime_.jsx("stop", {
                                                     stopColor: "#EBF1F5",
                                                     stopOpacity: ".8",
                                                     offset: "0%"
                                                 }),
-                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("stop", {
+                                                /*#__PURE__*/ jsx_runtime_.jsx("stop", {
                                                     stopColor: "#EBF1F5",
                                                     offset: "100%"
                                                 })
                                             ]
                                         })
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("circle", {
+                                    /*#__PURE__*/ jsx_runtime_.jsx("circle", {
                                         fill: "url(#a)",
                                         cx: "44",
                                         cy: "44",
                                         r: "44"
                                     }),
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("path", {
+                                    /*#__PURE__*/ jsx_runtime_.jsx("path", {
                                         className: "fill-current text-purple-600",
                                         d: "M52 44a.999.999 0 00-.427-.82l-10-7A1 1 0 0040 37V51a.999.999 0 001.573.82l10-7A.995.995 0 0052 44V44c0 .001 0 .001 0 0z"
                                     })
@@ -850,15 +859,15 @@ function ModalVideo({ thumb , thumbWidth , thumbHeight , thumbAlt , video , vide
                     ]
                 })
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__/* .Transition */ .u, {
+            /*#__PURE__*/ jsx_runtime_.jsx(transition/* Transition */.u, {
                 show: modalOpen,
-                as: react__WEBPACK_IMPORTED_MODULE_1__.Fragment,
+                as: react_.Fragment,
                 afterEnter: ()=>videoRef.current?.play(),
-                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_headlessui_react__WEBPACK_IMPORTED_MODULE_4__/* .Dialog */ .V, {
+                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(dialog/* Dialog */.V, {
                     initialFocus: videoRef,
                     onClose: ()=>setModalOpen(false),
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__/* .Transition.Child */ .u.Child, {
+                        /*#__PURE__*/ jsx_runtime_.jsx(transition/* Transition.Child */.u.Child, {
                             className: "fixed inset-0 z-[99999] bg-black bg-opacity-75 transition-opacity",
                             enter: "transition ease-out duration-200",
                             enterFrom: "opacity-0",
@@ -868,7 +877,7 @@ function ModalVideo({ thumb , thumbWidth , thumbHeight , thumbAlt , video , vide
                             leaveTo: "opacity-0",
                             "aria-hidden": "true"
                         }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_headlessui_react__WEBPACK_IMPORTED_MODULE_3__/* .Transition.Child */ .u.Child, {
+                        /*#__PURE__*/ jsx_runtime_.jsx(transition/* Transition.Child */.u.Child, {
                             className: "fixed inset-0 z-[99999] overflow-hidden flex items-center justify-center transform px-4 sm:px-6",
                             enter: "transition ease-out duration-200",
                             enterFrom: "opacity-0 scale-95",
@@ -876,18 +885,18 @@ function ModalVideo({ thumb , thumbWidth , thumbHeight , thumbAlt , video , vide
                             leave: "ttransition ease-out duration-200",
                             leaveFrom: "oopacity-100 scale-100",
                             leaveTo: "opacity-0 scale-95",
-                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
                                 className: "max-w-6xl mx-auto h-full flex items-center",
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_headlessui_react__WEBPACK_IMPORTED_MODULE_4__/* .Dialog.Panel */ .V.Panel, {
+                                children: /*#__PURE__*/ jsx_runtime_.jsx(dialog/* Dialog.Panel */.V.Panel, {
                                     className: "w-full max-h-full aspect-video bg-black overflow-hidden",
-                                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("video", {
+                                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("video", {
                                         ref: videoRef,
                                         width: videoWidth,
                                         height: videoHeight,
                                         loop: true,
                                         controls: true,
                                         children: [
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("source", {
+                                            /*#__PURE__*/ jsx_runtime_.jsx("source", {
                                                 src: video,
                                                 type: "video/mp4"
                                             }),
@@ -904,72 +913,13 @@ function ModalVideo({ thumb , thumbWidth , thumbHeight , thumbAlt , video , vide
     });
 }
 
-
-/***/ }),
-
-/***/ 4506:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "$$typeof": () => (/* binding */ $$typeof),
-/* harmony export */   "__esModule": () => (/* binding */ __esModule),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5985);
-
-const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\arif_\Documents\Carshipy Official\app\(default)\layout.tsx`)
-
-// Accessing the __esModule property and exporting $$typeof are required here.
-// The __esModule getter forces the proxy target to create the default export
-// and the $$typeof value is for rendering logic to determine if the module
-// is a client boundary.
-const { __esModule, $$typeof } = proxy;
-const __default__ = proxy.default;
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__default__);
-
-/***/ }),
-
-/***/ 6034:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ Home),
-  "metadata": () => (/* binding */ metadata)
-});
-
-// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(6786);
-;// CONCATENATED MODULE: ./public/images/hero-image-01.jpg
-/* harmony default export */ const hero_image_01 = ({"src":"/_next/static/media/hero-image-01.1f6edd86.jpg","height":1152,"width":2048,"blurDataURL":"data:image/jpeg;base64,/9j/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAFAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAeEAACAgEFAQAAAAAAAAAAAAABAgADEQUiMTJBYf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCPr1Gxlv7KFQWbWx4Djj6YiIF//9k=","blurWidth":8,"blurHeight":5});
-// EXTERNAL MODULE: ./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js
-var module_proxy = __webpack_require__(5985);
-;// CONCATENATED MODULE: ./components/modal-video.tsx
-
-const proxy = (0,module_proxy.createProxy)(String.raw`C:\Users\arif_\Documents\Carshipy Official\components\modal-video.tsx`)
-
-// Accessing the __esModule property and exporting $$typeof are required here.
-// The __esModule getter forces the proxy target to create the default export
-// and the $$typeof value is for rendering logic to determine if the module
-// is a client boundary.
-const { __esModule, $$typeof } = proxy;
-const __default__ = proxy.default;
-
-
-/* harmony default export */ const modal_video = (__default__);
 ;// CONCATENATED MODULE: ./components/hero.tsx
+/* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
 
 function Hero() {
+    const [isOpen, setIsOpen] = (0,react_.useState)(false);
     return /*#__PURE__*/ jsx_runtime_.jsx("section", {
         children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
             className: "max-w-6xl mx-auto px-4 sm:px-6 relative",
@@ -1043,6 +993,7 @@ function Hero() {
                                             children: /*#__PURE__*/ jsx_runtime_.jsx("a", {
                                                 className: "btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0",
                                                 href: "#0",
+                                                onClick: ()=>setIsOpen(true),
                                                 children: "Start free trial"
                                             })
                                         }),
@@ -1059,7 +1010,7 @@ function Hero() {
                                 })
                             ]
                         }),
-                        /*#__PURE__*/ jsx_runtime_.jsx(modal_video, {
+                        /*#__PURE__*/ jsx_runtime_.jsx(ModalVideo, {
                             thumb: hero_image_01,
                             thumbWidth: 1024,
                             thumbHeight: 576,
@@ -1075,6 +1026,65 @@ function Hero() {
     });
 }
 
+
+/***/ }),
+
+/***/ 4506:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "$$typeof": () => (/* binding */ $$typeof),
+/* harmony export */   "__esModule": () => (/* binding */ __esModule),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5985);
+
+const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`C:\Users\arif_\Documents\Carshipy Official\app\(default)\layout.tsx`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__default__);
+
+/***/ }),
+
+/***/ 2819:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ Home),
+  "metadata": () => (/* binding */ metadata)
+});
+
+// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__(6786);
+// EXTERNAL MODULE: ./node_modules/next/dist/build/webpack/loaders/next-flight-loader/module-proxy.js
+var module_proxy = __webpack_require__(5985);
+;// CONCATENATED MODULE: ./components/hero.tsx
+
+const proxy = (0,module_proxy.createProxy)(String.raw`C:\Users\arif_\Documents\Carshipy Official\components\hero.tsx`)
+
+// Accessing the __esModule property and exporting $$typeof are required here.
+// The __esModule getter forces the proxy target to create the default export
+// and the $$typeof value is for rendering logic to determine if the module
+// is a client boundary.
+const { __esModule, $$typeof } = proxy;
+const __default__ = proxy.default;
+
+
+/* harmony default export */ const hero = (__default__);
 ;// CONCATENATED MODULE: ./components/features.tsx
 
 function Features() {
@@ -1909,7 +1919,7 @@ const metadata = {
 function Home() {
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
         children: [
-            /*#__PURE__*/ jsx_runtime_.jsx(Hero, {}),
+            /*#__PURE__*/ jsx_runtime_.jsx(hero, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Features, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Zigzag, {}),
             /*#__PURE__*/ jsx_runtime_.jsx(Testimonials, {}),
@@ -1957,18 +1967,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 4663:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/hero-image-01.1f6edd86.jpg","height":1152,"width":2048,"blurDataURL":"data:image/jpeg;base64,/9j/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAFAAgDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAeEAACAgEFAQAAAAAAAAAAAAABAgADEQUiMTJBYf/EABQBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCPr1Gxlv7KFQWbWx4Djj6YiIF//9k=","blurWidth":8,"blurHeight":5});
-
-/***/ }),
-
 /***/ 4187:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -2012,7 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [319,393,850,623], () => (__webpack_exec__(9368)));
+var __webpack_exports__ = __webpack_require__.X(0, [319,924,850,623], () => (__webpack_exec__(9368)));
 module.exports = __webpack_exports__;
 
 })();

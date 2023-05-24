@@ -39,46 +39,57 @@ var react_ = __webpack_require__(8038);
 // EXTERNAL MODULE: ./node_modules/next/link.js
 var next_link = __webpack_require__(1621);
 var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
+// EXTERNAL MODULE: ./node_modules/react-datepicker/dist/index.js
+var dist = __webpack_require__(5435);
+// EXTERNAL MODULE: ./node_modules/react-datepicker/dist/react-datepicker.css
+var react_datepicker = __webpack_require__(7441);
 ;// CONCATENATED MODULE: ./components/modalForm.tsx
+
+
 
 
 const ModalForm = ()=>{
     const [isOpen, setIsOpen] = (0,react_.useState)(false);
     const [formData, setFormData] = (0,react_.useState)({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = (0,react_.useState)(0);
-    const [isSubmitting, setIsSubmitting] = (0,react_.useState)(false);
+    const [estimatedPrice, setEstimatedPrice] = (0,react_.useState)(null);
     const [isLoading, setIsLoading] = (0,react_.useState)(false);
-    const [estimatedPrice, setEstimatedPrice] = (0,react_.useState)("");
     const questions = [
         {
             label: "Your Name",
             name: "name",
-            type: "text"
+            type: "text",
+            required: true
         },
         {
             label: "Email Address",
             name: "email",
-            type: "email"
+            type: "email",
+            required: true
         },
         {
             label: "Phone Number",
             name: "number",
-            type: "number"
+            type: "number",
+            required: true
         },
         {
             label: "The model of Car",
             name: "model",
-            type: "text"
+            type: "text",
+            required: true
         },
         {
             label: "The make of Car",
             name: "make",
-            type: "text"
+            type: "text",
+            required: true
         },
         {
             label: "The year of Car",
-            name: "make",
-            type: "number"
+            name: "year",
+            type: "number",
+            required: true
         },
         {
             label: "Is the Vehicle Operable?",
@@ -86,64 +97,159 @@ const ModalForm = ()=>{
             type: "checkbox"
         },
         {
-            label: "Would you prefer an oper air carrier?",
+            label: "Would you prefer an open air carrier?",
             name: "carrier",
             type: "checkbox"
         },
         {
             label: "Pick up City",
             name: "city",
-            type: "text"
+            type: "select",
+            options: [
+                "New York",
+                "California",
+                "Texas",
+                "Florida",
+                "Illinois",
+                "Pennsylvania",
+                "Ohio",
+                "Georgia",
+                "North Carolina",
+                "Michigan"
+            ],
+            required: true
         },
         {
             label: "Desired Pick up date",
             name: "dates",
-            type: "date"
+            type: "date",
+            required: true
         },
         {
             label: "Destination City",
             name: "destination",
-            type: "text"
+            type: "select",
+            options: [
+                "New York",
+                "California",
+                "Texas",
+                "Florida",
+                "Illinois",
+                "Pennsylvania",
+                "Ohio",
+                "Georgia",
+                "North Carolina",
+                "Michigan"
+            ],
+            required: true
         }
     ];
     const handleInputChange = (e)=>{
-        const { name , value , type , checked  } = e.target;
-        const inputValue = type === "checkbox" ? checked : value;
+        const { name , value , type  } = e.target;
+        const inputValue = type === "checkbox" ? e.target.checked : value;
         setFormData((prevData)=>({
                 ...prevData,
                 [name]: inputValue
             }));
     };
+    const calculateEstimatedPrice = ()=>{
+        // Your calculation logic goes here
+        // Example: Set the estimated price based on some formula or algorithm
+        const price = Math.random() * 1000;
+        setEstimatedPrice(price);
+    };
     const handleSubmit = (event)=>{
         event.preventDefault();
-        setIsSubmitting(true);
+        setFormData((prevData)=>({
+                ...prevData,
+                [questions[currentQuestionIndex].name]: undefined
+            }));
         setCurrentQuestionIndex((prevIndex)=>prevIndex + 1);
-        setTimeout(()=>{
-            setIsSubmitting(false);
+        if (currentQuestionIndex === questions.length - 1) {
             setIsLoading(true);
-            // Simulate loading time
             setTimeout(()=>{
-                const basePrice = 1200;
-                const price = basePrice + Math.floor(Math.random() * 5) * 50; // Generate random price
-                setEstimatedPrice(`$${price}`);
+                calculateEstimatedPrice();
                 setIsLoading(false);
-                setCurrentQuestionIndex((prevIndex)=>prevIndex + 1);
-            }, 6000);
-        }, 3000);
+            }, 3000);
+        }
     };
     const handleBookNow = ()=>{
         alert("Details will be emailed to you shortly");
         window.location.reload();
     };
-    (0,react_.useEffect)(()=>{
-        if (currentQuestionIndex === questions.length + 1) {
-            setIsOpen(false);
-            setCurrentQuestionIndex(0);
+    const renderQuestion = (question)=>{
+        switch(question.type){
+            case "checkbox":
+                return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
+                    style: {
+                        display: "inline-flex",
+                        alignItems: "center",
+                        marginTop: "1.5rem"
+                    },
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                            type: "checkbox",
+                            name: question.name,
+                            checked: formData[question.name],
+                            onChange: handleInputChange,
+                            style: {
+                                marginRight: "0.5rem"
+                            }
+                        }),
+                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
+                            children: question.label
+                        })
+                    ]
+                });
+            case "date":
+                return /*#__PURE__*/ jsx_runtime_.jsx(dist/* default */.ZP, {
+                    name: question.name,
+                    selected: formData[question.name],
+                    onChange: (date)=>setFormData((prevData)=>({
+                                ...prevData,
+                                [question.name]: date
+                            })),
+                    dateFormat: "yyyy-MM-dd",
+                    placeholderText: "yyyy-MM-dd",
+                    className: "form-control"
+                });
+            case "select":
+                return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("select", {
+                    name: question.name,
+                    value: formData[question.name],
+                    onChange: handleInputChange,
+                    style: {
+                        color: "black",
+                        fontWeight: 700
+                    },
+                    required: question.required,
+                    className: "form-control",
+                    children: [
+                        /*#__PURE__*/ jsx_runtime_.jsx("option", {
+                            value: "",
+                            children: "Select an option"
+                        }),
+                        question.options?.map((option)=>/*#__PURE__*/ jsx_runtime_.jsx("option", {
+                                value: option,
+                                children: option
+                            }, option))
+                    ]
+                });
+            default:
+                return /*#__PURE__*/ jsx_runtime_.jsx("input", {
+                    type: question.type,
+                    name: question.name,
+                    style: {
+                        color: "black",
+                        fontWeight: "700"
+                    },
+                    value: formData[question.name],
+                    onChange: handleInputChange,
+                    required: question.required,
+                    className: "form-control"
+                });
         }
-    }, [
-        currentQuestionIndex,
-        questions.length
-    ]);
+    };
     return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
         children: [
             /*#__PURE__*/ jsx_runtime_.jsx("button", {
@@ -189,40 +295,45 @@ const ModalForm = ()=>{
                                 /*#__PURE__*/ jsx_runtime_.jsx("h2", {
                                     children: questions[currentQuestionIndex].label
                                 }),
-                                questions[currentQuestionIndex].type === "checkbox" ? /*#__PURE__*/ (0,jsx_runtime_.jsxs)("label", {
-                                    style: {
-                                        display: "inline-flex",
-                                        alignItems: "center",
-                                        marginTop: "1.5rem"
-                                    },
+                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)("form", {
+                                    onSubmit: handleSubmit,
                                     children: [
-                                        /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                            type: "checkbox",
-                                            name: questions[currentQuestionIndex].name,
-                                            checked: formData[questions[currentQuestionIndex].name],
-                                            onChange: handleInputChange,
+                                        renderQuestion(questions[currentQuestionIndex]),
+                                        /*#__PURE__*/ jsx_runtime_.jsx("button", {
+                                            className: "form-button",
+                                            type: "submit",
                                             style: {
-                                                marginRight: "0.5rem"
-                                            }
-                                        }),
-                                        /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                            children: questions[currentQuestionIndex].label
+                                                backgroundColor: "#6B46C1",
+                                                color: "white",
+                                                padding: "0.5rem 1rem",
+                                                marginLeft: "3px",
+                                                border: "none",
+                                                borderRadius: "4px",
+                                                fontSize: "14px",
+                                                cursor: "pointer"
+                                            },
+                                            children: "Next"
                                         })
                                     ]
-                                }) : /*#__PURE__*/ jsx_runtime_.jsx("input", {
-                                    type: "text",
-                                    name: questions[currentQuestionIndex].name,
-                                    value: formData[questions[currentQuestionIndex].name],
-                                    onChange: handleInputChange,
-                                    style: {
-                                        marginBottom: "1rem",
-                                        padding: "0.5rem"
-                                    }
+                                })
+                            ]
+                        }),
+                        currentQuestionIndex === questions.length && /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx("h2", {
+                                    children: "Estimated Price:"
+                                }),
+                                isLoading ? /*#__PURE__*/ jsx_runtime_.jsx("p", {
+                                    children: "Loading..."
+                                }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
+                                    children: [
+                                        "$",
+                                        estimatedPrice !== null ? estimatedPrice.toFixed(2) : "N/A"
+                                    ]
                                 }),
                                 /*#__PURE__*/ jsx_runtime_.jsx("button", {
                                     className: "form-button",
-                                    onClick: handleSubmit,
-                                    disabled: isSubmitting,
+                                    onClick: handleBookNow,
                                     style: {
                                         backgroundColor: "#6B46C1",
                                         color: "white",
@@ -232,37 +343,9 @@ const ModalForm = ()=>{
                                         fontSize: "14px",
                                         cursor: "pointer"
                                     },
-                                    children: isSubmitting ? "Submitting..." : "Next"
+                                    children: "Book Now"
                                 })
                             ]
-                        }),
-                        currentQuestionIndex === questions.length && /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                            children: isLoading ? /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                children: "Loading..."
-                            }) : /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("h2", {
-                                        children: "Estimated Price:"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("p", {
-                                        children: estimatedPrice
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("button", {
-                                        className: "form-button",
-                                        onClick: handleBookNow,
-                                        style: {
-                                            backgroundColor: "#6B46C1",
-                                            color: "white",
-                                            padding: "0.5rem 1rem",
-                                            border: "none",
-                                            borderRadius: "4px",
-                                            fontSize: "14px",
-                                            cursor: "pointer"
-                                        },
-                                        children: "Book Now"
-                                    })
-                                ]
-                            })
                         })
                     ]
                 })
